@@ -1,0 +1,73 @@
+﻿@model Lab4.Models.ViewModels.CommunityViewModel
+
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h3>Students</h3>
+
+
+<table class="table">
+    <tr>
+        @if (Model.Communities.Count() > 0)
+        {
+            <th class="itemRow"> Last Name </th>
+            <th class="itemRowCol"> First Name </th>
+            <th class="itemRowCol"> Enrollment Date </th>
+        }
+        else
+        {
+            <th> No communities exist</th>
+        }
+    </tr>
+    <tbody>
+        @foreach (var item in Model.Students)
+        {
+            <tr>
+                <td>@item.LastName</td>
+                <td>@item.FirstName</td>
+                <td>@item.EnrollmentDate</td>
+
+                <td>
+                    <a asp-action="Index" asp-route-id="@item.Id">Select</a> |
+                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                    <a asp-action="EditMemberships" asp-route-id="@item.Id">Edit Membership</a> |
+                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+
+@if (ViewData["StudentID"] != null)
+{
+    <br>
+    <table class="table">
+
+
+
+
+
+        <tr class="itemRow">
+            <th>Members of the community</th>
+        </tr>
+        <tr class="itemRow" style="text-align:left">
+            <th>Name</th>
+        </tr>
+
+
+        @foreach (var membershipItem in Model.CommunityMemberships.Where(x => x.StudentId.Equals(ViewData["StudentID"])))
+        { 
+            @foreach (var comunity in Model.Communities.Where(x => x.Id == membershipItem.CommunityId))
+            {
+                <tr class="itemRow"><td>@comunity.Title<td></tr>
+            }
+
+        }
+
+    </table>
+}

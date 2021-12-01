@@ -1,0 +1,31 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <link href="~/StyleSheet.css" rel="stylesheet" />
+</head>
+
+<body>
+
+    <header>
+        <h4>WELCOME! My name is André Giroux. This is Lab4 of NET Enterprise.</h4>
+
+        @Html.ActionLink("Index View", "Index", "Home")<br />
+        @Html.ActionLink("Students View", "Index", "Students")<br />
+        @Html.ActionLink("Communities View", "Index", "Communities")<br />
+    </header>
+    <div class="ag">
+        @RenderBody()
+    </div>
+    <footer>
+        <h4>Created by André Giroux</h4>
+
+
+
+
+
+    </footer>
+
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

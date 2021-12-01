@@ -1,0 +1,53 @@
+﻿@model Lab4.Models.ViewModels.StudentMembershipViewModel
+
+
+@{
+    ViewData["Title"] = "EditMemberships";
+}
+
+<h1>Edit</h1>
+
+<h4>Student</h4>
+
+<div class="row">
+    <div class="col-md-4">
+    
+        <table class="table">
+
+           
+            <p>@Model.Student.FirstName</p>
+
+
+            @foreach (var item in Model.Memberships)
+            {
+                <tr>
+                    <td>@item.Title</td>
+
+                    @if (!item.IsMember)
+                    {
+                        <td> <a asp-action="AddMembership" asp-route-studentId="@Model.Student.Id" asp-route-communityId="@item.CommunityId">Register</a></td>
+                    }
+                    else
+                    {
+                        <td> <a asp-action="RemoveMembership" asp-route-studentId="@Model.Student.Id" asp-route-communityId="@item.CommunityId">Unregister</a></td>
+                    }
+
+                </tr>
+            }
+
+
+        </table>
+
+
+</div>
+</div>
+
+
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

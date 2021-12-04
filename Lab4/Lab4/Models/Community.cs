@@ -11,7 +11,7 @@ namespace Lab4.Models
     public class Community
     {
         [Required]
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        
         [Display(Name = "Registration Number")]
         public string Id { get; set; }
 

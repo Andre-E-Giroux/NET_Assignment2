@@ -5,9 +5,10 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using Assignment2.Models;
 using Lab4.Data;
+using Lab4.Models;
 using Lab4.Models.ViewModels;
+using Assignment2.Models;
 
 namespace Assignment2.Controllers
 {
@@ -39,7 +40,7 @@ namespace Assignment2.Controllers
                if(communityItem.Id.Equals(id))
                 {
                     viewModel.Community = communityItem;
-
+                    break;
                 }
             }
 
@@ -48,7 +49,7 @@ namespace Assignment2.Controllers
            
 
 
-            ViewData["CommunityID"] = "A1";
+            //ViewData["CommunityID"] = "A1";
 
            
            
@@ -76,8 +77,12 @@ namespace Assignment2.Controllers
         }
 
         // GET: Advertisements/Create
-        public IActionResult Create()
+        public IActionResult Create(string id)
         {
+
+
+            ViewData["HoldCommunityId"] = id;
+
             return View();
         }
 
@@ -86,15 +91,91 @@ namespace Assignment2.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("AdvertisementId,FileName,Url")] Advertisement advertisement)
+        public async Task<IActionResult> Create([Bind("AdvertisementId,FileName,Url")] Advertisement advertisement, string communityID)
         {
+            var comAdd = new CommunityAdvertisement();
+
+            comAdd.CommunityId = communityID;
+
+            Console.WriteLine(comAdd.CommunityId);
+            //comAdd.AdvertismentID = advertisement.AdvertisementId;
+
+            advertisement.CommunityAdvertisment = comAdd;
+
+            // advertisement advertisement are null
+            var communities = await _context.Communities.Include(k => k.Advertisements).ToListAsync();//.FindAsync(comAdd.CommunityId);
+
+            Community holdComm = new Community();
+
+            foreach(var item in communities)
+            {
+                if (item.Id == communityID)
+                    holdComm = item;
+            }
+
+
+            holdComm.Advertisements.Concat(new[] { comAdd });
+
+            Console.WriteLine(holdComm.Advertisements);
+
             if (ModelState.IsValid)
             {
-                _context.Add(advertisement);
+                Console.WriteLine(comAdd.AdvertismentID + " - " + comAdd.CommunityId);
+                _context.Advertisements.Add(advertisement);
+                _context.CommunityAdvertisements.Add(comAdd);
+
+                _context.Communities.Update(holdComm);
+
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+
+
+
+
+
+
+
+
+                //////////
+
+                var viewModel = new AdsViewModel();
+
+                var hold = await _context.Communities
+                               .Include(i => i.Advertisements)
+                               .ToListAsync();
+
+
+
+                //Console.WriteLine("");
+
+                foreach (var communityItem in hold)
+                {
+                    if (communityItem.Id.Equals(communityID))
+                    {
+                        viewModel.Community = communityItem;
+                        break;
+                    }
+                }
+
+                viewModel.Advertisements = await _context.Advertisements.Where(x => x.CommunityAdvertisment.CommunityId == communityID).ToListAsync();
+
+
+
+
+                //ViewData["CommunityID"] = "A1";
+
+
+
+
+                return View("Index",viewModel);
+
             }
-            return View(advertisement);
+
+            
+
+
+
+
+            return View();
         }
 
         // GET: Advertisements/Edit/5

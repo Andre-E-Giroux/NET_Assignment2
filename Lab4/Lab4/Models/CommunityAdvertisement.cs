@@ -8,7 +8,7 @@ namespace Assignment2.Models
     public class CommunityAdvertisement
     {
 
-        public string AdvertismentID
+        public int AdvertismentID
         {
             get;
             set;

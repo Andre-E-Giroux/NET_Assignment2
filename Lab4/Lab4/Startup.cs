@@ -1,4 +1,3 @@
-using Assignment2.Data;
 using Azure.Storage.Blobs;
 using Lab4.Data;
 using Microsoft.AspNetCore.Builder;
@@ -26,7 +25,6 @@ namespace Lab4
             services.AddControllersWithViews();
 
             
-            services.AddDbContext<AdvertisementContext>(options => options.UseSqlServer(connection));
 
             var blobConnection = Configuration.GetConnectionString("AzureBlobStorage");
             services.AddSingleton(new BlobServiceClient(blobConnection));

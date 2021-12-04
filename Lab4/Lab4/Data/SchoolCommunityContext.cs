@@ -33,7 +33,7 @@ namespace Lab4.Data
             modelBuilder.Entity<Community>().ToTable("Community");
             modelBuilder.Entity<Advertisement>().ToTable("Advertisement");
             modelBuilder.Entity<CommunityMembership>().HasKey(c => new { c.StudentId, c.CommunityId });
-            modelBuilder.Entity<CommunityAdvertisement>().HasKey(c => new { c.AdvertismentID, c.CommunityId });
+            modelBuilder.Entity<CommunityAdvertisement>().HasKey(c => new { c.AdvertismentID});
 
         }
 

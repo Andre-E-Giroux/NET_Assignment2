@@ -4,6 +4,8 @@
     ViewData["Title"] = "Create";
 }
 
+
+
 <h1>Create</h1>
 
 <h4>Advertisement</h4>
@@ -21,6 +23,8 @@
                 <input asp-for="Url" type="file">
             </div>
             
+            
+
             <!--
             <div class="form-group">
                 <label asp-for="Url" class="control-label"></label>
@@ -30,14 +34,14 @@
             -->
 
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Create" class="btn btn-primary" asp-route-communityID="@ViewData["HoldCommunityId"]"/>
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index" asp-route-id="@ViewData["HoldCommunityId"]">Back to List</a>
 </div>
 
 @section Scripts {

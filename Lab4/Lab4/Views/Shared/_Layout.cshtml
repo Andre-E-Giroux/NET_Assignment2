@@ -1,31 +1,54 @@
 ﻿<!DOCTYPE html>
-
-<html>
+<html lang="en">
 <head>
-    <link href="~/StyleSheet.css" rel="stylesheet" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - André Giroux Assignment 2</title>
+    <link rel="stylesheet" href="~/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/StyleSheet.css" />
 </head>
-
 <body>
-
     <header>
-        <h4>WELCOME! My name is André Giroux. This is Lab4 of NET Enterprise.</h4>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+            <div class="container">
+                <a class="navbar-brand" asp-area="" asp-page="/Index">School Community</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" @Html.ActionLink("Index View","Index","Home")</a>
 
-        @Html.ActionLink("Index View", "Index", "Home")<br />
-        @Html.ActionLink("Students View", "Index", "Students")<br />
-        @Html.ActionLink("Communities View", "Index", "Communities")<br />
+                        </li>
+                        <li class="nav-item">
+                           <a class="nav-link text-dark" @Html.ActionLink("Students View","Index","Students")</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" @Html.ActionLink("Communities View","Index","Communities")</a>
+                            
+                        </li>
+
+
+
+                    </ul>
+                </div>
+            </div>
+        </nav>
     </header>
-    <div class="ag">
-        @RenderBody()
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
     </div>
-    <footer>
-        <h4>Created by André Giroux</h4>
 
 
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
 
-
-
-    </footer>
-
-    @RenderSection("Scripts", required: false)
+    @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

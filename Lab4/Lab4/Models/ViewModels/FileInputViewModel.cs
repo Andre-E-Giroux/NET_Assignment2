@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Lab4.Models.ViewModels
+namespace Assignment2.Models.ViewModels
 {
     public class FileInputViewModel
     {

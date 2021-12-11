@@ -176,8 +176,34 @@ namespace Lab4.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(string id)
         {
-            var community = await _context.Communities.FindAsync(id);
+            //var community = await _context.Communities.FindAsync(id);
+
+            var community = await _context.Communities.Include(x => x.Advertisements).FirstOrDefaultAsync(i => i.Id == id);
+
+            foreach(var item in community.Advertisements)
+            {
+                Console.WriteLine("FOUND ONE");
+            }
+            
+            // if there is an advertisement, do not pass. Works, no indication of success
+            if (community.Advertisements.Any())
+            {
+                return View();
+            }
+
+
+
+          
             _context.Communities.Remove(community);
+
+
+            var memberships = _context.CommunityMemberships.Where(x => x.CommunityId.Equals(id));
+            foreach (var item in memberships)
+            {
+                _context.CommunityMemberships.Remove(item);
+            }
+
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }

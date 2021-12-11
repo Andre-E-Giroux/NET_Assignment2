@@ -83,8 +83,10 @@ namespace Lab4.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Title,Budget")] Student student)
+        public async Task<IActionResult> Create([Bind("Id, LastName, FirstName, EnrollmentDate")] Student student)
         {
+
+
             if (ModelState.IsValid)
             {
                 _context.Add(student);
@@ -112,7 +114,7 @@ namespace Lab4.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,Budget")] Student student)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,LastName,FirstName,EnrollmentDate")] Student student)
         {
             if (id != student.Id)
             {
@@ -160,10 +162,18 @@ namespace Lab4.Controllers
         // POST: Student/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(string id)
+        public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var student = await _context.Students.FindAsync(id);
             _context.Students.Remove(student);
+
+
+            var memberships = _context.CommunityMemberships.Where(x => x.StudentId == id);
+            foreach (var item in memberships)
+            {
+                _context.CommunityMemberships.Remove(item);
+            }
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
@@ -221,7 +231,10 @@ namespace Lab4.Controllers
                 }
 
                 viewStudentMembershipModel.Memberships = viewStudentMembershipModel.Memberships.Concat(new CommunityMembershipViewModel[] { commItem });
-                
+
+                viewStudentMembershipModel.Memberships = viewStudentMembershipModel.Memberships.OrderBy(x => x.Title).OrderBy(x => !x.IsMember);
+
+
             }
 
 

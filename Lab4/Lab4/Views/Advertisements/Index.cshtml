@@ -3,8 +3,10 @@
 @{
     ViewData["Title"] = "Index";
 }
-@Model.Community.Title
 
+@{ if (Model.Community != null)
+    {
+@Model.Community.Title
 
 <p>
     <a asp-action="Create" asp-route-id="@Model.Community.Id">Upload New</a>
@@ -27,9 +29,7 @@
             <th>
                 Image
             </th>
-            <th>
-                ID
-            </th>
+
             <th></th>
         </tr>
 
@@ -48,10 +48,12 @@
                     @item.AdvertisementId
                 <td>
             </tr>
-    }
+        }
 
 
         </thead>
         <tbody>
         </tbody>
     </table>
+        }
+    }

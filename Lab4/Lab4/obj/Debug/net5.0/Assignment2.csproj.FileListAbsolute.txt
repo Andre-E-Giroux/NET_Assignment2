@@ -186,3 +186,4 @@ C:\Users\Andre\Documents\AlgonquinCollege\Assignment2_NET\Lab4\Lab4\obj\Debug\ne
 C:\Users\Andre\Documents\AlgonquinCollege\Assignment2_NET\Lab4\Lab4\obj\Debug\net5.0\Razor\Views\Advertisements\Details.cshtml.g.cs
 C:\Users\Andre\Documents\AlgonquinCollege\Assignment2_NET\Lab4\Lab4\obj\Debug\net5.0\Razor\Views\Advertisements\Edit.cshtml.g.cs
 C:\Users\Andre\Documents\AlgonquinCollege\Assignment2_NET\Lab4\Lab4\obj\Debug\net5.0\Razor\Views\Advertisements\Index.cshtml.g.cs
+C:\Users\Andre\Documents\AlgonquinCollege\Assignment2_NET\Lab4\Lab4\obj\Debug\net5.0\Razor\Views\Shared\1_Layout.cshtml.g.cs

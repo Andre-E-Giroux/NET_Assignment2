@@ -6,7 +6,7 @@
 }
 
 <h3>Students</h3>
-
+<a asp-action="Create">Upload New</a>
 
 <table class="table">
     <tr>
@@ -61,7 +61,7 @@
 
 
         @foreach (var membershipItem in Model.CommunityMemberships.Where(x => x.StudentId.Equals(ViewData["StudentID"])))
-        { 
+        {
             @foreach (var comunity in Model.Communities.Where(x => x.Id == membershipItem.CommunityId))
             {
                 <tr class="itemRow"><td>@comunity.Title<td></tr>

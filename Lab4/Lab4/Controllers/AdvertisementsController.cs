@@ -14,6 +14,7 @@ using Azure;
 using System.IO;
 using Microsoft.AspNetCore.Http;
 using Assignment2.Models.ViewModels;
+using Microsoft.AspNetCore.Routing;
 
 namespace Assignment2.Controllers
 {
@@ -123,8 +124,6 @@ namespace Assignment2.Controllers
             fileViewModel.CommunityId = communityId;
            
 
-
-
             BlobContainerClient containerClient;
 
 
@@ -180,34 +179,6 @@ namespace Assignment2.Controllers
 
 
 
-
-                //
-
-
-
-               // _context.Advertisements.Add(advertisement);
-               // await _context.SaveChangesAsync();
-
-
-
-
-
-
-
-
-
-                // _context.Advertisements.Add(image);
-                // await _context.SaveChangesAsync();
-
-
-
-
-
-
-                //////////////////////////////////
-
-
-
                 var comAdvertisement = new CommunityAdvertisement();
 
 
@@ -217,7 +188,7 @@ namespace Assignment2.Controllers
 
                 //comAdd.AdvertismentID = advertisement.AdvertisementId;
 
-                advertisement.CommunityAdvertisment = comAdvertisement;
+                //advertisement.CommunityAdvertisment = comAdvertisement;
 
                 // advertisement advertisement are null
 
@@ -236,11 +207,32 @@ namespace Assignment2.Controllers
 
                 if (ModelState.IsValid)
                 {
-                    Console.WriteLine(comAdvertisement.AdvertismentID + " - " + comAdvertisement.CommunityId);
                     _context.Advertisements.Add(advertisement);
+
+                    await _context.SaveChangesAsync();
+
+
+                    advertisement = await _context.Advertisements.FirstOrDefaultAsync(x => x.FileName == advertisement.FileName);
+
+                    comAdvertisement.AdvertismentID = advertisement.AdvertisementId;
+
+                    advertisement.CommunityAdvertisment = comAdvertisement;
+
+                    _context.Advertisements.Update(advertisement);
+
+
+
+
                     _context.CommunityAdvertisements.Add(comAdvertisement);
 
+                    await _context.SaveChangesAsync();
+
+
+                    
+                   
+
                     _context.Communities.Update(community);
+
 
                     await _context.SaveChangesAsync();
 
@@ -252,8 +244,6 @@ namespace Assignment2.Controllers
                                    .ToListAsync();
 
 
-
-                    //Console.WriteLine("");
 
                     foreach (var communityItem in hold)
                     {
@@ -267,9 +257,6 @@ namespace Assignment2.Controllers
                     adsViewModel.Advertisements = await _context.Advertisements.Where(x => x.CommunityAdvertisment.CommunityId == community.Id).ToListAsync();
 
 
-
-
-                    //ViewData["CommunityID"] = "A1";
 
 
 
@@ -293,97 +280,6 @@ namespace Assignment2.Controllers
 
 
 
-            /////////////////////////
-
-
-
-
-
-
-
-
-
-
-
-            /*
-
-
-
-
-            var comAdvertisement = new CommunityAdvertisement();
-
-
-
-            comAdvertisement.CommunityId = communityID;
-
-           
-            //comAdd.AdvertismentID = advertisement.AdvertisementId;
-
-            advertisement.CommunityAdvertisment = comAdvertisement;
-
-            // advertisement advertisement are null
-            var communities = await _context.Communities.Include(k => k.Advertisements).ToListAsync();//.FindAsync(comAdd.CommunityId);
-
-            Community community = new Community();
-
-            foreach(var item in communities)
-            {
-                if (item.Id == communityID)
-                    community = item;
-            }
-
-
-            community.Advertisements.Concat(new[] { comAdvertisement });
-
-            Console.WriteLine(community.Advertisements);
-
-            if (ModelState.IsValid)
-            {
-                Console.WriteLine(comAdvertisement.AdvertismentID + " - " + comAdvertisement.CommunityId);
-                _context.Advertisements.Add(advertisement);
-                _context.CommunityAdvertisements.Add(comAdvertisement);
-
-                _context.Communities.Update(community);
-
-                await _context.SaveChangesAsync();
-
-
-                var viewModel = new AdsViewModel();
-
-                var hold = await _context.Communities
-                               .Include(i => i.Advertisements)
-                               .ToListAsync();
-
-
-
-                //Console.WriteLine("");
-
-                foreach (var communityItem in hold)
-                {
-                    if (communityItem.Id.Equals(communityID))
-                    {
-                        viewModel.Community = communityItem;
-                        break;
-                    }
-                }
-
-                viewModel.Advertisements = await _context.Advertisements.Where(x => x.CommunityAdvertisment.CommunityId == communityID).ToListAsync();
-
-
-
-
-                //ViewData["CommunityID"] = "A1";
-
-
-
-
-                return View("Index",viewModel);
-
-            }
-
-
-            return View();
-            */
         }
 
         // GET: Advertisements/Edit/5
@@ -445,12 +341,13 @@ namespace Assignment2.Controllers
                 return NotFound();
             }
 
-            var advertisement = await _context.Advertisements
+            var advertisement = await _context.Advertisements.Include(x =>x.CommunityAdvertisment)
                 .FirstOrDefaultAsync(m => m.AdvertisementId == id);
             if (advertisement == null)
             {
                 return NotFound();
             }
+            ViewData["HoldCommunityId"] = advertisement.CommunityAdvertisment.CommunityId;
 
             return View(advertisement);
         }
@@ -458,12 +355,14 @@ namespace Assignment2.Controllers
         // POST: Advertisements/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(int id, string communityID)
         {
             var advertisement = await _context.Advertisements.FindAsync(id);
             _context.Advertisements.Remove(advertisement);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("Index", new RouteValueDictionary(
+                new { controller = "Advertisements", action = "Index", id = communityID })
+);
         }
 
         private bool AdvertisementExists(int id)

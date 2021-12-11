@@ -55,7 +55,8 @@ namespace Assignment2.Migrations
                 {
                     b.Property<int>("AdvertismentID")
                     .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn); ;
 
                     b.Property<string>("CommunityId")
                         .HasColumnType("nvarchar(450)");

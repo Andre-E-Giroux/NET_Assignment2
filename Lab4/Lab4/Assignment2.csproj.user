@@ -15,7 +15,7 @@
     <WebStackScaffolding_DbContextTypeFullName>Lab4.Data.SchoolCommunityContext</WebStackScaffolding_DbContextTypeFullName>
     <WebStackScaffolding_IsAsyncSelected>False</WebStackScaffolding_IsAsyncSelected>
     <WebStackScaffolding_IsViewGenerationSelected>True</WebStackScaffolding_IsViewGenerationSelected>
-    <NameOfLastUsedPublishProfile>C:\Users\Andre\Documents\AlgonquinCollege\Lab4_NET\Lab4\Lab4\Properties\PublishProfiles\Andre-Giroux-NET-Lab4 - Web Deploy.pubxml</NameOfLastUsedPublishProfile>
+    <NameOfLastUsedPublishProfile>C:\Users\Andre\Documents\AlgonquinCollege\Assignment2_NET\Lab4\Lab4\Properties\PublishProfiles\Andre-Giroux-NET-Assignment2 - Web Deploy.pubxml</NameOfLastUsedPublishProfile>
     <WebStackScaffolding_ViewDialogWidth>650.4</WebStackScaffolding_ViewDialogWidth>
   </PropertyGroup>
 </Project>

@@ -185,12 +185,7 @@ namespace Lab4.Controllers
 
 
 
-
-
-
-
-
-        //added
+        //ADDED
         // GET: Communities/Edit/5
         public async Task<IActionResult> EditMemberships(int id)
         {

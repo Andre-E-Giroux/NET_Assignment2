@@ -1,69 +1,71 @@
-﻿body {
-    border: none;
-    margin: 0;
-    background-color: #7d7d7d;
-    color: white;
-    font-family: 'Segoe UI';
+﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
+for details on configuring this project to bundle and minify static web assets. */
+
+a.navbar-brand {
+  white-space: normal;
+  text-align: center;
+  word-break: break-all;
 }
 
-header {
-    background-color: #7d7d7d;
-    color: white;
-    border-bottom: solid 1px black;
-    margin: 0;
-    padding: 10px;
+/* Provide sufficient contrast against white background */
+a {
+  color: #0366d6;
 }
 
-footer {
-    color: white;
-    background-color: #7d7d7d;
-    border-top: solid 1px black;
-    margin: 0;
-    padding: 10px;
+.btn-primary {
+  color: #fff;
+  background-color: #1b6ec2;
+  border-color: #1861ac;
 }
 
-.table {
-    border-collapse: collapse;
-    text-align:left;
+.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
+  color: #fff;
+  background-color: #1b6ec2;
+  border-color: #1861ac;
 }
 
-.itemRow {
-    border-bottom: 1px solid white;
+/* Sticky footer styles
+-------------------------------------------------- */
+html {
+  font-size: 14px;
+}
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
 }
 
-.itemColumn {
-    border-left: 1px solid white;
+.border-top {
+  border-top: 1px solid #e5e5e5;
+}
+.border-bottom {
+  border-bottom: 1px solid #e5e5e5;
 }
 
-.itemRowCol {
-    border-bottom: 1px solid white;
-    border-bottom: 1px solid white;
+.box-shadow {
+  box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
 }
 
-
-.content {
-    padding: 10px 10px 10px 10px;
+button.accept-policy {
+  font-size: 1rem;
+  line-height: inherit;
 }
 
-h1, h2, h3, h4, h5, h6 {
-    margin-top: 0;
-    padding-top: 0;
+/* Sticky footer styles
+-------------------------------------------------- */
+html {
+  position: relative;
+  min-height: 100%;
 }
 
-
-.indexMSG {
-    margin-bottom: 0px;
+body {
+  /* Margin bottom by footer height */
+  margin-bottom: 60px;
 }
-
-.ag {
-    padding-top: 15px;
-    padding-bottom: 20px;
-    padding-left: 10px;
-    background-color: #6b6b6b;
-    color: white
-}
-
-.error {
-    color: black;
-    background-color: red;
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  white-space: nowrap;
+  line-height: 60px; /* Vertically center the text there */
 }

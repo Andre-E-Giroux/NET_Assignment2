@@ -179,16 +179,16 @@ namespace Lab4.Controllers
             //var community = await _context.Communities.FindAsync(id);
 
             var community = await _context.Communities.Include(x => x.Advertisements).FirstOrDefaultAsync(i => i.Id == id);
+            
+            var advertisements = _context.Advertisements.Include(x => x.CommunityAdvertisment).Where(x => x.CommunityAdvertisment.CommunityId == id);
 
-            foreach(var item in community.Advertisements)
-            {
-                Console.WriteLine("FOUND ONE");
-            }
+
             
             // if there is an advertisement, do not pass. Works, no indication of success
             if (community.Advertisements.Any())
             {
-                return View();
+                ModelState.AddModelError(nameof(community.Title), "Community has " + advertisements.Count() + " advertisements, please delete them before deleting the community");
+                return View(community);
             }
 
 
